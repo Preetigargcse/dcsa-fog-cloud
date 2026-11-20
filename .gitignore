@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+# regenerable intermediate (17 MB): created by experiments/exchangeable.py
+results/exch_records.pkl
+results/*.log
+results/ALIBABA.jsonl
+# LaTeX build files
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.pdf
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+# raw trace (download separately)
+batch_task.csv

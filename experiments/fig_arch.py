@@ -1,0 +1,30 @@
+import matplotlib; matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
+INK="#1f1f1e"; MUT="#6b6b66"; SH="#e9f2fc"; ED="#2a78d6"
+fig, ax = plt.subplots(figsize=(7.2, 2.5)); ax.set_xlim(-1.5, 100); ax.set_ylim(0, 36); ax.axis("off")
+def box(x, y, w, h, t, fc="white", ec=MUT, fs=7.2, bold=False):
+    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.4,rounding_size=1.2", fc=fc, ec=ec, lw=1))
+    ax.text(x + w/2, y + h/2, t, ha="center", va="center", fontsize=fs, color=INK, family="DejaVu Sans", weight="bold" if bold else "normal")
+def arr(x1, y1, x2, y2, t=None, ls="-", dy=1.2):
+    ax.add_patch(FancyArrowPatch((x1, y1), (x2, y2), arrowstyle="-|>", mutation_scale=8, color=INK, lw=0.9, ls=ls))
+    if t: ax.text((x1+x2)/2, (y1+y2)/2 + dy, t, ha="center", va="bottom", fontsize=6.3, color=MUT, family="DejaVu Sans")
+ax.add_patch(FancyBboxPatch((40.5, 2.5), 31, 31, boxstyle="round,pad=0.4,rounding_size=1.5", fc=SH, ec=ED, lw=1))
+ax.text(56, 31.2, "DCSA calibration layer", ha="center", fontsize=7.5, color=ED, family="DejaVu Sans", weight="bold")
+box(0.0, 18, 10.5, 9, "Workflow $i$\n(DAG, $D_i$)", fs=6.8)
+box(13.2, 18, 13.3, 9, "Plan\ngenerator\n($P$ plans)", fs=6.8)
+box(29, 18, 9.5, 9, "Risk\nscore\n$s_{ip}$", fs=6.8)
+box(43, 18, 26, 9, "admit iff $\\min_p s_{ip}\\leq\\lambda$\nselect $\\arg\\min_{s_{ip}\\leq\\lambda} c_{ip}$", fc="white", ec=ED)
+box(42.3, 5, 13, 8, "DCSA-Off\ncertify $\\hat\\lambda$", ec=ED, fs=6.6)
+box(57.3, 5, 13, 8, "DCSA-On\n$\\lambda\\!\\leftarrow\\!\\lambda-\\eta(L-\\alpha)$", ec=ED, fs=6.6)
+box(76, 23, 23, 8, "Execute on fog/cloud\n(FIFO queues)")
+box(76, 12, 23, 7, "Reject / redirect")
+box(76, 1.5, 23, 7, "Outcome $L_j$ at\nmin(finish, $t_j{+}D_j$)")
+arr(11, 22.5, 13.2, 22.5); arr(26.9, 22.5, 29, 22.5); arr(38.8, 22.5, 43, 22.5)
+arr(69.5, 24.5, 76, 26); ax.text(72.6, 27.2, "admit", ha="center", fontsize=6.3, color=MUT); arr(69.5, 20.5, 76, 15.5); ax.text(71.2, 15.2, "reject", ha="center", fontsize=6.3, color=MUT)
+arr(87.5, 23, 87.5, 8.7); arr(76, 5, 70.8, 8.5); ax.text(73.4, 0.6, "feedback", ha="center", fontsize=6.3, color=MUT)
+arr(55.7, 9, 57.3, 9, None); arr(63, 13.2, 60, 18, None, ls="--"); arr(49, 13.2, 52, 18, None, ls="--")
+ax.text(20.5, 7.5, "replay / digital twin:\ncounterfactual outcomes\nof all candidates", ha="center", fontsize=6.3, color=MUT, family="DejaVu Sans")
+arr(31, 9, 42.3, 9)
+ax.text(52.5, 15.0, "$\\hat\\lambda$", fontsize=7, color=ED); ax.text(62.6, 15.0, "$\\lambda_t$", fontsize=7, color=ED)
+fig.savefig("figs/fig_arch.pdf", bbox_inches="tight"); fig.savefig("/tmp/arch.png", dpi=150, bbox_inches="tight")

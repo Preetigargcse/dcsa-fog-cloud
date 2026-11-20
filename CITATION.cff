@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the accompanying article."
+title: "DCSA: Decision-Calibrated Selective Admission for Deadline-Constrained Workflows in Fog-Cloud Systems"
+authors:
+  - family-names: Garg
+    given-names: Preeti
+    affiliation: "KIET Group of Institutions, Ghaziabad, India"
+license: MIT
+repository-code: "https://github.com/Preetigargcse/dcsa-fog-cloud"
+version: 1.0.0
+date-released: 2026-11-20
